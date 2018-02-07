@@ -1,0 +1,95 @@
+/* ==|== Milestone Table Chart (CSS) ==========================================================
+ *
+ *  Custom Control for production Order Milestones (332)
+ *  @see /resources/controls/MilestoneChart.js
+ *
+ * author: SAP AG
+ * version: 30.04.2014
+ * ============================================================
+ */
+
+/* == || Basics ====================================================== */
+
+		.sapMRPMSChart {
+			width: 100%;
+			border-spacing: 0;
+			border-collapse: collapse;
+			text-align: center;	
+			font-size: 0.875rem;
+			margin-bottom: 2rem;
+		}
+		
+		.sapMRPMSChart th {color: @sapUiElement; font-weight: normal}
+		.sapMRPMSChart td {width: 10%}
+		.sapMRPMSChart td,
+		.sapMRPMSChart th { padding: 0.5em 0;}
+		
+		.sapMRPMSChart .sapMRPMSPlanned th,
+		.sapMRPMSChart .sapMRPMSActual th {
+			text-align: right;
+			padding-right: 0.75em;
+		}
+		
+		.sapMRPMSChart .sapMRPMS1 {	text-align: left;	}
+		.sapMRPMSChart .sapMRPMS2 {	text-align: center;	}
+		.sapMRPMSChart .sapMRPMS3 {	text-align: center;	}
+		.sapMRPMSChart .sapMRPMS4 {	text-align: right;	}
+		
+	 	
+	 	.sapMRPMSChart .sapMRPMSChannel1 td,
+	 	.sapMRPMSChart .sapMRPMSChannel2 td,
+	 	.sapMRPMSChart .sapMRPMSChannel3 td 
+	 	{font-size: 12px; color: @sapUiElement;}
+ 	
+/* == || Channel 1 (Arrow) ====================================================== */
+		.sapMRPMSChart .sapMRPMSChannel1 .sapMRPMSArrow {
+			   width: 0; 
+			   height: 0;
+			   border-top: 6px solid @sapUiExtraDarkBorder;
+			   border-left: 6px solid transparent; 
+			   border-right: 6px solid transparent;
+			   display: inline-block;	
+			   padding-top: 2px;			   		 			     
+		}
+	 	.sapMRPMSChart .sapMRPMSChannel1 td {padding-bottom: 0; line-height: 0}
+	 	
+		.sapMRPMSChannel1 td:first-of-type {
+			text-align: right;
+		}
+		.sapMRPMSChannel1 td:first-of-type, .sapMRPMSArrow {
+			margin-right: -6px;
+		}
+		
+		.sapMRPMSChannel1 td:last-of-type {
+			text-align: left;
+		}
+		.sapMRPMSChannel1 td:last-of-type, .sapMRPMSArrow {
+			margin-left: -6px;
+		}
+
+/* == || Channel 2 (Line) ====================================================== */
+		.sapMRPMSChart .sapMRPMSChannel2 td { border: 1px solid @sapUiDarkBorder; padding: 3px 0;}
+		.sapMRPMSChart .sapMRPMSChannel2 td:first-of-type { border: none; }
+		.sapMRPMSChart .sapMRPMSChannel2 .sapMRPMSProgress {background-color: @sapUiNeutralElement; border-right: 1px solid @sapUiNeutral;}
+	
+/* == || Channel 3 (Partion Points) ====================================================== */
+		.sapMRPMSChart .sapMRPMSChannel3 { line-height: 0;	}
+		.sapMRPMSChart .sapMRPMSChannel3 td {border-right: 1px solid @sapUiDarkBorder;}
+		.sapMRPMSChart .sapMRPMSChannel3 td:last-of-type {border-right: none;}
+
+			
+/* == || Semantic Colors ====================================================== */
+		.sapMRPMSChart .sapMRPMSIssue {color: @sapUiNegativeText}
+	
+
+
+
+		
+
+/* == || Labels ====================================================== */
+	.sapMRPMSLabels th, .sapMRPMSPlanned td, .sapMRPMSActual td {
+		border-bottom: 1px solid @sapUiExtraLightBorder;
+	}		
+	
+	.sapMRPMSLabels th:first-child {border-bottom: none}	
+

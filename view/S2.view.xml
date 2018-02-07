@@ -1,0 +1,47 @@
+<!--
+
+    Copyright (C) 2009-2014 SAP SE or an SAP affiliate company. All rights reserved
+
+-->
+<!-- 332: Monitor Production Orders -->
+<core:View xmlns:core="sap.ui.core" xmlns="sap.m"
+	xmlns:mrp="i2d.pp.mrpcockpit.reuse.controls" controllerName="i2d.pp.prdorderissue.details.view.S2">
+	<Page id="page" title="{i18n>MASTER_TITLE}" class="sapMRPMasterPage">
+		<content>
+			<List id="list" mode="{device>/listMode}" select="_handleSelect"
+				growing="true" updateStarted="onItemsUpdateStarted" updateFinished="onItemsUpdateFinished">
+				<ObjectListItem id="MAIN_LIST_ITEM" type="{device>/listItemType}"
+					press=" _handleItemPress" title="{MaterialName}"
+					number="{parts : [{path : 'MfgOrderPlannedTotalQty'}, {path: 'TargetQuantityUnitDcmls'}], formatter: 'i2d.pp.mrpcockpit.reuse.util.CommonFormatter.quantity'}"
+					numberUnit="{UnitOfMeasureTechnicalName}" numberState="None">
+					<attributes>
+						<ObjectAttribute class="sapMRPLAMA" text="{MaterialExternalID}" />
+						<ObjectAttribute
+							text="{parts : [{path : 'MfgOrderPlannedStartDate'}, {path : 'MfgOrderPlannedEndDate'}], formatter: 'i2d.pp.prdorderissue.details.util.Formatters.formatFromToDateShort'}" />
+						<ObjectAttribute
+							text="{parts : [{path : 'Common_i18n>TUPEL_WITH_BLANK'},{path : 'MRPElementCategoryShortName'}, {path : 'MRPElement'}], formatter:'jQuery.sap.formatMessage'}" />
+					</attributes>
+					<firstStatus>
+						<mrp:ObjectStatusBar text="{formatter: 'i2d.pp.prdorderissue.details.util.Formatters.returnUnderscore'}">
+							<mrp:content>
+							<ObjectStatus
+								icon="sap-icon://BusinessSuiteInAppSymbols/icon-stock-requirements"
+								state="{parts : [{path : 'LatenessDurationInWorkDays'}], formatter: 'i2d.pp.prdorderissue.details.util.Formatters.baseMaterialDelayState'}"
+								tooltip="{parts : [{path : 'LatenessDurationInWorkDays'}], formatter: 'i2d.pp.prdorderissue.details.util.Formatters.baseMaterialDelayText'}"></ObjectStatus>
+							<ObjectStatus icon="sap-icon://tree"
+								state="{parts : [{path : 'NumberOfComponentsWithProblems'}], formatter: 'i2d.pp.prdorderissue.details.util.Formatters.missingComponentsState'}"
+								tooltip="{parts : [{path : 'NumberOfComponentsWithProblems'}], formatter: 'i2d.pp.prdorderissue.details.util.Formatters.missingComponentsText'}"></ObjectStatus>
+							<ObjectStatus icon="sap-icon://gantt-bars"
+								state="{parts : [{path : 'DurnPlndStatusToTodayInWrkdays'}], formatter: 'i2d.pp.prdorderissue.details.util.Formatters.processDelayState'}"
+								tooltip="{parts : [{path : 'DurnPlndStatusToTodayInWrkdays'}], formatter: 'i2d.pp.prdorderissue.details.util.Formatters.processDelayText'}"></ObjectStatus>
+							</mrp:content>
+						</mrp:ObjectStatusBar>
+					</firstStatus>
+				</ObjectListItem>
+			</List>
+		</content>
+		<footer>
+			<Bar id="footer"></Bar>
+		</footer>
+	</Page>
+</core:View>

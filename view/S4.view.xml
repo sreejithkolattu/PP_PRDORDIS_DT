@@ -1,0 +1,14 @@
+<!--
+
+    Copyright (C) 2009-2014 SAP SE or an SAP affiliate company. All rights reserved
+
+-->
+<core:View xmlns:core="sap.ui.core" xmlns="sap.m"
+	controllerName="i2d.pp.prdorderissue.details.view.S4">
+
+<!-- The complete solution page is extracted to a fragment -->
+	<core:Fragment
+		fragmentName="i2d.pp.mrpcockpit.reuse.fragments.SolutionViewPage"
+		type="XML" />
+		
+</core:View>

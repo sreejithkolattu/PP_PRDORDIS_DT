@@ -1,0 +1,224 @@
+<!--
+
+    Copyright (C) 2009-2014 SAP SE or an SAP affiliate company. All rights reserved
+
+-->
+<core:FragmentDefinition xmlns:core="sap.ui.core"
+	xmlns="sap.m"
+	xmlns:poid="i2d.pp.prdorderissue.details.controls"
+	xmlns:layout="sap.ui.layout">
+	<IconTabFilter 
+		id="operationsTab"
+		icon="sap-icon://gantt-bars"
+		key="mOperationsTab" 
+		tooltip="{i18n>MILESTONE_ICON_TAB_TOOLTIP}"
+		iconColor="{path: 'DurnPlndStatusToTodayInWrkdays', formatter:'.formatOpsTabIconColor'}"
+	>
+		
+		<content>
+			<ObjectHeader id="operationsObjectHeader" condensed="true" title="{i18n>MILESTONE_HEADER_TITLE}"/>
+
+			<!-- ==== Extension Point ==== -->
+			<core:ExtensionPoint name="extOperationsTab1" />
+
+			<poid:MilestoneChart
+				id="detailOperationsMilestoneChart"
+				items="{path: 'ManufacturingOrderMilestones'}" 
+				width="100%"
+				tooltipDueTo="{i18n>MS_PLANNED_PROGRESS_INDICATOR}"
+				tooltipProgress="{i18n>MS_ACTUAL_PROGRESS_BAR}"
+				tooltipLabel1="{i18n>MS_PLANNED_DATE_TOOLTIP}"
+				tooltipLabel2="{i18n>MS_ACTUAL_DATE_TOOLTIP}"
+			>
+				<poid:items>
+					<poid:Milestone
+						state="{parts: [{path:'IsOverdue'}], formatter:'i2d.pp.prdorderissue.details.util.Formatters.formatMilestoneOverdue'}"
+						label = "{parts: [{path:'Status'}], formatter:'i2d.pp.prdorderissue.details.util.Formatters.formatMilestoneLabel'}"
+						plannedDate = "{path:'PlannedDate', type:'sap.ca.ui.model.type.Date', formatOptions : {UTC:true, style:'medium'}}"
+						actualDate = "{path:'ActualDate', type:'sap.ca.ui.model.type.Date', formatOptions : {UTC:true, style:'medium'}}"
+						isDue="{IsDue}"
+						tooltip = "{path:'Status', formatter:'i2d.pp.prdorderissue.details.util.Formatters.formatMilestoneTooltip'}"
+					/>
+				</poid:items>
+			</poid:MilestoneChart>
+			
+			<!-- ==== Extension Point ==== -->
+			<core:ExtensionPoint name="extOperationsTab2" />
+
+			<Table
+				id="detailOperationsTable"
+				items="{path: 'ManufacturingOrderOperations'}"
+				showSeparators="Inner"
+				growing="true" 
+				growingThreshold="10" 
+				growingScrollToLoad="true"
+			>
+				<columns>
+					<!-- ==== Extension Point ==== -->
+					<core:ExtensionPoint name="extOperationsTableAddColumnHeader1" />
+
+					<Column
+						id="detailOperationTableColumnMilestone"
+						hAlign="Center" width="1rem">
+					</Column>
+
+					<!-- ==== Extension Point ==== -->
+					<core:ExtensionPoint name="extOperationsTableAddColumnHeader2" />
+
+					<Column
+						id="detailOperationTableColumnComponent"
+						hAlign="Begin">
+						<header>
+							<Label
+								text="{parts: [{path:'MRPElementCategory'}, {path:'i18n>OPERATION_LIST_OPERATION'}, {path:'i18n>OPERATION_LIST_PHASE'}], formatter:'.formatOpsColumnHeader'}"
+								tooltip="{parts: [{path:'MRPElementCategory'}, {path:'i18n>OPERATION_LIST_OPERATION_TOOLTIP'}, {path:'i18n>OPERATION_LIST_PHASE_TOOLTIP'}], formatter:'.formatOpsColumnHeader'}"/>
+						</header>
+					</Column>
+
+					<!-- ==== Extension Point ==== -->
+					<core:ExtensionPoint name="extOperationsTableAddColumnHeader3" />
+
+					<Column
+						id="detailOperationTableColumnWorkCenter"
+						hAlign="Begin"
+						demandPopin="true"
+						popinDisplay="Inline"
+						minScreenWidth="Medium">
+						<header>
+							<Label
+								text="{parts: [{path:'MRPElementCategory'}, {path:'i18n>OPERATION_LIST_WORK_CENTER'}, {path:'i18n>OPERATION_LIST_RESOURCE'}], formatter:'.formatOpsColumnHeader'}"
+								tooltip="{parts: [{path:'MRPElementCategory'}, {path:'i18n>OPERATION_LIST_WORK_CENTER_TOOLTIP'}, {path:'i18n>OPERATION_LIST_RESOURCE_TOOLTIP'}], formatter:'.formatOpsColumnHeader'}"/>
+						</header>
+					</Column>
+
+					<!-- ==== Extension Point ==== -->
+					<core:ExtensionPoint name="extOperationsTableAddColumnHeader4" />
+
+					<Column
+						id="detailOperationTableColumnRequiredDates"
+						hAlign="Center"
+						demandPopin="true"
+						popinDisplay="Inline"
+						minScreenWidth="Medium">
+						<header>
+							<Label text="{i18n>OPERATION_LIST_DATES}" tooltip="{i18n>OPERATION_LIST_DATES_TOOLTIP}"/>
+						</header>
+					</Column>
+
+					<!-- ==== Extension Point ==== -->
+					<core:ExtensionPoint name="extOperationsTableAddColumnHeader5" />
+
+					<Column
+						id="detailOperationTableColumnQuantity"
+						hAlign="Center"
+						demandPopin="true"
+						popinDisplay="Inline"
+						minScreenWidth="Medium">
+						<header>
+							<Label text="{i18n>OPERATION_LIST_QUANTITIES}" tooltip="{i18n>OPERATION_LIST_QUANTITIES_TOOLTIP}"/>
+						</header>
+					</Column>
+
+					<!-- ==== Extension Point ==== -->
+					<core:ExtensionPoint name="extOperationsTableAddColumnHeader6" />
+
+					<Column
+						id="detailOperationTableColumnStatus"
+						hAlign="Center">
+						<header>
+							<Label text="{i18n>OPERATION_LIST_STATUS}" tooltip="{i18n>OPERATION_LIST_STATUS_TOOLTIP}"/>
+						</header>
+					</Column>
+
+					<!-- ==== Extension Point ==== -->
+					<core:ExtensionPoint name="extOperationsTableAddColumnHeader7" />
+				</columns>
+				<items>
+				<!-- template start--> 
+				<ColumnListItem>
+					<cells>
+						<!-- ==== Extension Point ==== -->
+						<core:ExtensionPoint name="extOperationsTableAddColumnData1" />
+
+						<core:Icon 
+							class="sapMRPControlSideMargin" 
+							src="{path:'MilestoneConfirmation', formatter:'i2d.pp.prdorderissue.details.util.Formatters.formatMilestoneConfirmation'}"
+						/>
+
+						<!-- ==== Extension Point ==== -->
+						<core:ExtensionPoint name="extOperationsTableAddColumnData2" />
+
+						<ObjectIdentifier
+							title="{parts: [{path:'ProductionOrderOperationID'}, {path:'ProductionOrderSequenceID'}], formatter:'i2d.pp.prdorderissue.details.util.Formatters.formatOperation'}"
+							text="{OperationDescription}"
+						/>
+
+						<!-- ==== Extension Point ==== -->
+						<core:ExtensionPoint name="extOperationsTableAddColumnData3" />
+
+						<ObjectIdentifier
+							title="{WorkCenterID}"
+							text="{WorkCenter}"
+						/>
+
+						<!-- ==== Extension Point ==== -->
+						<core:ExtensionPoint name="extOperationsTableAddColumnData4" />
+
+						<layout:VerticalLayout width="100%" class="sapMRPVlt">
+							<ObjectStatus 
+								text="{path:'ScheduledFromDateTime', type:'sap.ca.ui.model.type.DateTime', formatOptions : {UTC:true, style:'short'}}" 
+								state="{parts: [{path:'ScheduledFromOverdue'}], formatter:'i2d.pp.prdorderissue.details.util.Formatters.formatScheduledTimeState'}" 
+							/>
+							<ObjectStatus
+								text="{path:'ScheduledToDateTime', type:'sap.ca.ui.model.type.DateTime', formatOptions : {UTC:true, style:'short'}}" 
+								state="{parts: [{path:'ScheduledToOverdue'}], formatter:'i2d.pp.prdorderissue.details.util.Formatters.formatScheduledTimeState'}" 
+							/>
+						</layout:VerticalLayout>
+
+						<!-- ==== Extension Point ==== -->
+						<core:ExtensionPoint name="extOperationsTableAddColumnData5" />
+
+						<layout:HorizontalLayout class="sapMRPHlt">
+							<ObjectStatus text="{parts: [{path:'ConfirmedQuantity'}, {path:'OperationQuantity'}, {path:'DecimalPlaces'}], formatter:'i2d.pp.prdorderissue.details.util.Formatters.formatMissingOperationQuantity'}" ></ObjectStatus>
+							<Text text="{i18n>QUANTITY_SEPARATER}"></Text>
+							<ObjectNumber
+								number="{parts: [{path:'OperationQuantity'}, {path:'DecimalPlaces'}], formatter:'i2d.pp.mrpcockpit.reuse.util.CommonFormatter.quantity'}"
+								numberUnit="{UnitOfMeasure}"
+								emphasized="false"
+							/>
+						</layout:HorizontalLayout>
+
+						<!-- ==== Extension Point ==== -->
+						<core:ExtensionPoint name="extOperationsTableAddColumnData6" />
+
+						<layout:VerticalLayout width="100%" class="sapMRPStatusIndicator">
+							<VBox width="100%" tooltip="{path:'Status', formatter:'i2d.pp.prdorderissue.details.util.Formatters.formatStatusText'}">
+								<RatingIndicator
+									enabled="false"
+									maxValue="3"
+									value="{path:'Status', formatter:'i2d.pp.prdorderissue.details.util.Formatters.formatStatusValue'}"
+									iconSize="1rem"
+									iconSelected="sap-icon://color-fill"
+									iconUnselected="sap-icon://border"
+									iconHovered="sap-icon://color-fill"
+									visualMode="Full"
+								/>
+							</VBox>
+							<Label class="sapMRPLabel"
+								text="{path:'ConfirmationDateTime', type:'sap.ca.ui.model.type.DateTime', formatOptions : {UTC:true, style:'short'}}" 
+							/>
+						</layout:VerticalLayout>
+
+						<!-- ==== Extension Point ==== -->
+						<core:ExtensionPoint name="extOperationsTableAddColumnData7" />
+					</cells>
+				</ColumnListItem>
+				<!-- template end -->
+				</items>
+			</Table>
+
+			<!-- ==== Extension Point ==== -->
+			<core:ExtensionPoint name="extOperationsTab3" />
+		</content>
+	</IconTabFilter>
+</core:FragmentDefinition>

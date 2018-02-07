@@ -1,0 +1,138 @@
+<!--
+
+    Copyright (C) 2009-2014 SAP SE or an SAP affiliate company. All rights reserved
+
+-->
+<core:FragmentDefinition xmlns:core="sap.ui.core"
+	xmlns="sap.m"
+	xmlns:layout="sap.ui.layout"
+	xmlns:mrp="i2d.pp.mrpcockpit.reuse.controls">
+	<IconTabFilter id="componentsTab" icon="sap-icon://tree" key="moComponentsTab" tooltip="{i18n>COMPONENT_ICON_TAB_TOOLTIP}"
+		 count="{path: 'NumberOfComponentsWithProblems', formatter:'.formatComponentTabCount'}" iconColor="{path: 'NumberOfComponentsWithProblems', formatter:'.formatComponentTabIconColor'}">
+		<content>
+			<Panel>
+				<content>
+					<ObjectHeader
+						id="componentsObjectHeader"
+						condensed="true"
+						title="{parts: [{path: 'i18n>COMPONENT_HEADER_TITLE_WITH_COUNT'}, {path: 'componentsModel>/ComponentsCount'}], formatter: 'jQuery.sap.formatMessage'}"
+					>
+						<attributes>
+							<ObjectAttribute
+								text="{ComponentShortageDefinitionName}"
+								visible="{path: 'ComponentShortageDefinitionName', formatter: 'i2d.pp.mrpcockpit.reuse.util.CommonFormatter.hasValue' }"></ObjectAttribute>
+						</attributes>
+					</ObjectHeader>
+
+					<!-- ==== Extension Point ==== -->
+					<core:ExtensionPoint name="extComponentsTab1" />
+
+					<Table id="allComponentsTable" items="{path: 'ManufacturingOrderComponents'}"
+						showSeparators="Inner"	visible="true" growing="true" growingThreshold="10" growingScrollToLoad="true" mode="MultiSelect"
+						updateFinished="onComponentsUpdateFinished" selectionChange="onComponentsSelectionChange">
+						<columns>
+							<!-- ==== Extension Point ==== -->
+							<core:ExtensionPoint name="extAllComponentsPanelAddColumnHeader1" />
+
+							<!-- ==== Requested Date ==== -->
+							<Column id="allComponentsColumnMaterial">
+								<header>
+									<Label text="{i18n>COMPONENT_LIST_MATERIAL}" tooltip="{i18n>COMPONENT_LIST_MATERIAL_TOOLTIP}"></Label>
+								</header>
+							</Column>
+
+							<!-- ==== Extension Point ==== -->
+							<core:ExtensionPoint name="extAllComponentsPanelAddColumnHeader2" />
+
+							<!-- ==== Quantity ==== -->
+							<Column id="allComponentsColumnQuantity" hAlign="Center">
+								<header>
+									<Label text="{i18n>COMPONENT_LIST_QUAN}" tooltip="{i18n>COMPONENT_LIST_QUAN_TOOLTIP}"></Label>
+								</header>
+							</Column>
+
+							<!-- ==== Extension Point ==== -->
+							<core:ExtensionPoint name="extAllComponentsPanelAddColumnHeader3" />
+
+							<!-- ==== Requested Date ==== -->
+							<Column id="allComponentsColumnDate" hAlign="Center">
+								<header>
+									<Label text="{i18n>COMPONENT_LIST_DATE}" tooltip="{i18n>COMPONENT_LIST_DATE_TOOLTIP}"></Label>
+								</header>
+							</Column>
+
+							<!-- ==== Extension Point ==== -->
+							<core:ExtensionPoint name="extAllComponentsPanelAddColumnHeader4" />
+
+							<!-- ==== Controller ==== -->
+							<Column id="allComponentsColumnController" hAlign="Center">
+								<header>
+									<Label text="{i18n>COMPONENT_LIST_CONTROLLER}" tooltip="{i18n>COMPONENT_LIST_CONTROLLER_TOOLTIP}"></Label>
+								</header>
+							</Column>
+
+							<!-- ==== Extension Point ==== -->
+							<core:ExtensionPoint name="extAllComponentsPanelAddColumnHeader5" />
+
+							<!-- ==== Status ==== -->
+							<Column id="allComponentsColumnStatus" hAlign="Center">
+								<header>
+									<Label text="{i18n>COMPONENT_LIST_STATUS}" tooltip="{i18n>COMPONENT_LIST_STATUS_TOOLTIP}"></Label>
+								</header>
+							</Column>
+
+							<!-- ==== Extension Point ==== -->
+							<core:ExtensionPoint name="extAllComponentsPanelAddColumnHeader6" />
+						</columns>
+						<items>
+							<ColumnListItem>
+								<cells>
+									<!-- ==== Extension Point ==== -->
+									<core:ExtensionPoint name="extAllComponentsPanelAddColumnData1" />
+
+									<mrp:ObjectIdentifier title="{MaterialName}" text="{MaterialExternalID}" >
+										<Link enabled="false" text="{MaterialName}" wrapping="true"/>
+									</mrp:ObjectIdentifier>
+
+									<!-- ==== Extension Point ==== -->
+									<core:ExtensionPoint name="extAllComponentsPanelAddColumnData2" />
+
+									<layout:HorizontalLayout class="sapMRPHlt">
+										<ObjectStatus text="{parts: [{path:'MRPElementMissingQuantity'}, {path:'TargetQuantityUnitDcmls'}], formatter:'i2d.pp.mrpcockpit.reuse.util.CommonFormatter.quantity'}" state="Error" visible="{path:'MRPElementMissingQuantity', formatter:'.visibilityMissingQuantity'}"></ObjectStatus>
+										<Text text="{i18n>QUANTITY_SEPARATER}" visible="{path:'MRPElementMissingQuantity', formatter:'.visibilityMissingQuantity'}"></Text>
+										<ObjectNumber
+											number="{parts: [{path:'MRPElementOpenQuantity'}, {path:'TargetQuantityUnitDcmls'}], formatter: 'i2d.pp.mrpcockpit.reuse.util.CommonFormatter.quantity'}"
+											numberUnit="{MaterialBaseUnit}"
+											emphasized="false"
+										/>
+									</layout:HorizontalLayout>
+
+									<!-- ==== Extension Point ==== -->
+									<core:ExtensionPoint name="extAllComponentsPanelAddColumnData3" />
+
+									<Text text="{path:'MRPElementAvailyOrRqmtDate', type:'sap.ca.ui.model.type.Date', formatOptions: {style:'short'}}"></Text>
+
+									<!-- ==== Extension Point ==== -->
+									<core:ExtensionPoint name="extAllComponentsPanelAddColumnData4" />
+
+									<Text text="{MRPControllerName}" />
+
+									<!-- ==== Extension Point ==== -->
+									<core:ExtensionPoint name="extAllComponentsPanelAddColumnData5" />
+
+									<ObjectStatus text="{parts: [{path: 'MaximumDelayInWorkDays'}, {path: 'MRPElementDelayedQuantity'}, {path: 'MRPElementMissingQuantity'}], formatter:'.formatDelay'}" state="{path: 'MRPElementMissingQuantity', formatter:'.formatDelayStatus'}"></ObjectStatus>
+
+									<!-- ==== Extension Point ==== -->
+									<core:ExtensionPoint name="extAllComponentsPanelAddColumnData6" />
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+
+					<!-- ==== Extension Point ==== -->
+					<core:ExtensionPoint name="extComponentsTab2" />
+				</content>
+			</Panel>
+		</content>
+	</IconTabFilter>
+</core:FragmentDefinition>
